@@ -1,0 +1,21 @@
+package j04_문자열;
+
+public class StringTest {
+
+	public static void main(String[] args) {
+		System.out.println("안녕하세요");
+		// System.out.println(""안녕하세요""); (큰따움표 안노옴 / 이스케이프 문자를 사용해야함)
+
+		System.out.println("\"안녕하세요\"");
+		
+		String address = "부산시 진구 가야동";
+		int index = address.indexOf("시");
+		System.out.println(index);
+		
+		int index2 = address.indexOf("구");
+		System.out.println(index2);
+		
+		
+	}
+
+}

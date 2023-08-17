@@ -1,0 +1,30 @@
+comment - 댓글 관계 테이블 (유저 - 게시물) n:n
+
+
+
+
+댓글에 댓글
+
+commnet number PK
+user_email
+board_number
+contents
+write_datetime
+parent_comment FK (null이 허용되는)
+
+
+board_image table
+
+board_number nn 게시물 번호
+image_url nn 게시물 이미지 url
+
+comment_count INT NN DF 0 댓글수
+favorite_count INT NN DF 0 좋아요 수
+
+인기검색어
+search_word
+relation_word
+relation_word TExT
+
+
+관련검색어

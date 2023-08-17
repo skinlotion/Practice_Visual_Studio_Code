@@ -1,0 +1,16 @@
+package exercise_class;
+
+public abstract class Vechicle {
+	
+		private String color;
+		
+		Vechicle(String colot) {
+			this.color = color;
+		}
+		
+		public String getColor() {
+			return color;
+		}
+		
+		abstract void run();
+	}

@@ -1,0 +1,30 @@
+package j18_JSON;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class Gson2 {
+
+	public static void main(String[] args) {
+		/*
+		 * user 객체 만들기
+		 * Gson 객체 만들기
+		 * 
+		 * user를 Json으로 바꿔서 출력
+		 */
+		
+		User user = UserService.createUser();
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String userJson = gson.toJson(user);
+		System.out.println(userJson);
+		
+		System.out.println();
+		
+		User userObj = gson.fromJson(userJson, User.class);
+		System.out.println(userObj);
+		
+		
+	}
+
+}

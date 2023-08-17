@@ -1,0 +1,17 @@
+package Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PersonDatabase {
+	
+	public void addPerson(Person person) {
+		List<Person> personlist = new ArrayList<Person>();
+		personlist.add(person);
+	}
+	
+	public void getPerson(int id) {
+		
+	}
+
+}

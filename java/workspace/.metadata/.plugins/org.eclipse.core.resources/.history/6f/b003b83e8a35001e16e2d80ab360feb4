@@ -1,0 +1,11 @@
+package exercise_class;
+
+public class Car extends Vechicle {
+	
+		Car(String color) {
+			super(color);
+	}
+		void run() {
+			System.out.println("The" + getColor() + "car run.");
+		}
+}

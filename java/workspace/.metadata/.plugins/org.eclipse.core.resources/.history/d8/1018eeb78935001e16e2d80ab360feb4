@@ -1,0 +1,18 @@
+package exercise_class;
+
+public abstract class vechicle {
+	
+		private String color;
+		
+		vehicle(String colot) {
+			this.color = color;
+		}
+		
+		public String getColor() {
+			return color;
+		}
+		
+		abstract void run();
+	}
+
+}

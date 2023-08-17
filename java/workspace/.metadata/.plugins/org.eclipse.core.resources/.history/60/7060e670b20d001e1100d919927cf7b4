@@ -1,0 +1,48 @@
+package j04_문자열;
+
+public class StringTest {
+
+	public static void main(String[] args) {
+		System.out.println("안녕하세요");
+		// System.out.println(""안녕하세요""); (큰따움표 안노옴 / 이스케이프 문자를 사용해야함)
+
+		System.out.println("\"안녕하세요\"");
+		
+		String address = "부산시 진구 가야동";
+		int index = address.indexOf("시");
+		System.out.println(index);
+		
+		int index2 = address.indexOf("구");
+		System.out.println(index2);
+		
+		String address2 = "부산시 동래구 사직동";
+		int index3 = address2.indexOf("동");
+		System.out.println(index3);
+		
+		int index4 = address2.lastIndexOf("동");
+		System.out.println(index4);
+		
+		String subAddress = address2.substring(0,2);
+		System.out.println(subAddress);
+		
+		String subAddress2 = address2.substring(0,4);
+		System.out.println(subAddress2);
+		
+		/*
+		 * 실습!
+		 * "부산광역시 서구 부민동" 에서 indexof, lastindexof를 사용해서
+		 * "부산광역시 서구"까지 출력
+		 */
+		
+		String address3 =  "부산광역시 서구 부민동";
+		int index5 = address3.indexOf("부");
+		int index6 = address3.lastIndexOf("부");
+		String subAddress3 = address3.substring(index5, index6 -1);
+		System.out.println(subAddress3);
+		
+		String replaceAddress = address3.replace(' ', '-');
+		System.out.println(replaceAddress);
+		
+	}
+
+}

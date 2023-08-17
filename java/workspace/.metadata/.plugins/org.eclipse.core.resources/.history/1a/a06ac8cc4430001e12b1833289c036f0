@@ -1,0 +1,10 @@
+package exercise_class.ParkingSystem;
+
+
+@
+public class User {
+	private String userName;
+	private String password;
+	private String name;
+	private String email;
+}

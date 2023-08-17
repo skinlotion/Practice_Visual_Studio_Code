@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="wizardPage">
+		<list key="groupId">
+			<item value="JavaStudy-2023-06-17-pjw"/>
+		</list>
+		<list key="name">
+			<item value="JavaStudy-2023-06-17-pjw"/>
+		</list>
+		<list key="artifactId">
+			<item value="JavaStudy-2023-06-17-pjw"/>
+		</list>
+		<list key="version">
+			<item value="1.0.0"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+</section>

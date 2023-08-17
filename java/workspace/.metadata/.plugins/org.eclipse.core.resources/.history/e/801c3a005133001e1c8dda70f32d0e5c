@@ -1,0 +1,63 @@
+package j17_컬랙션.HashMap;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Scanner;
+
+public class Dictionary {
+
+	public static void main(String[] args) {
+		/*
+		 * dict라는 HashMap 생성
+		 * 
+		 * 안에 값을 
+		 * 축구 : soccer
+		 * 야구 : baseball
+		 * 농구 : basketball
+		 * 골프 : golf
+		 * 
+		 * [사전 검색 기능]
+		 * # 프로그램 종료 명령어(exit)
+		 * 
+		 * 검색어 : 축구
+		 * soccer
+		 * 
+		 * 검색어 : 골프
+		 * golf
+		 * 
+		 * 검색어 : 미식축구
+		 * 지원하지 않는 단어 입니다.
+		 * 
+		 * 검색어 : exit
+		 * 프로그램 종료
+		 * 
+		 */
+
+		HashMap<String, String> dict = new HashMap<String, String>();
+		dict.put("축구", "soccer");
+		dict.put("야구", "baseball");
+		dict.put("농구", "basketball");
+		dict.put("골프", "golf");
+		
+		Scanner scanner = new Scanner(System.in);
+		String serch = null;
+		System.out.println("검색어 : ");
+		serch = scanner.nextLine();
+		
+		if ( serch.equals("축구")) {
+			System.out.println(dict.get("축구"));
+		}
+		
+		
+	
+			
+		
+		Iterator<String> dictSerch = dict.keySet().iterator();
+		while(dictSerch.hasNext()) {
+			System.out.println(dict.get(dictSerch.next()));
+		}
+		
+		
+	}
+
+}

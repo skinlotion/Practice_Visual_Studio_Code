@@ -1,0 +1,31 @@
+package j19_익명클래스.람다식;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+public class DefaultFuntion {
+
+	public static void main(String[] args) {
+		Runnable runnable = () -> {
+			System.out.println("runnable 인터페이스를 활용한 람다식");
+		};
+		runnable.run();
+		
+		Supplier<Integer> supplier = () -> 100;
+		System.out.println(supplier.get());
+		
+		Supplier<String> supplier2 = () -> {
+			System.out.println("실행문 작성가능");
+			return "hihi";
+		};
+		System.out.println(supplier2.get());
+		
+		
+		Consumer<String> consumer = name -> {
+			System.out.println("이름 : " + name);
+		};
+		consumer.accept("홍길동");
+		
+	}
+
+}

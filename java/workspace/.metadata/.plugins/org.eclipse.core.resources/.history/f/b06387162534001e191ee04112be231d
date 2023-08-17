@@ -1,0 +1,32 @@
+package j19_익명클래스.람다식;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Math<Integer, Integer> plushMath = new Math<Integer, Integer>() {
+			
+			@Override
+			public double calc(Integer value1, Integer value2) {
+				return value1 + value2;
+			}
+		};
+			
+		System.out.println(plushMath.calc(10, 20));
+		/*
+		 * 실습
+		 * plusMath2.calc (100.5, 200.5) 했을 시
+		 * 301 이라는 결과가 나오도록 만들기
+		 */
+		
+		Math<Double, Double> plushMath2 = new Math<Double, Double>() {
+			
+			@Override
+			public double calc(Double value1, Double value2) {
+				// TODO Auto-generated method stub
+				return value1 + value2;
+			}
+		};
+		System.out.println(plushMath2.calc(100.5, 200.5));
+		
+	}
+}

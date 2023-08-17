@@ -1,0 +1,10 @@
+package j17_컬랙션.user;
+
+public class JSONObject {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

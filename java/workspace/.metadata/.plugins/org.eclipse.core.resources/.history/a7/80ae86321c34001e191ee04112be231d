@@ -1,0 +1,15 @@
+package j18_JSON;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+public class Gson4 {
+
+	public static void main(String[] args) {
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		
+	}
+
+}

@@ -1,0 +1,41 @@
+package j17_컬랙션.user;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class JSONObject {
+
+	public static void main(String[] args) {
+		
+		Map<String, Object> jason = new HashMap<String, Object>();
+		jason.put("count", 1118);
+		jason.put("next", "api/v2/pokemon");
+		jason.put("count", null);
+	
+		List<Map<String, String>> jasonlist = new ArrayList<Map<String, String>>();
+		jason.put("result", jasonlist);
+		
+		Map<String, String> jasonObject1 = new HashMap<String, String>();
+		jasonObject1.put("name", "bulbasaur");
+		jasonObject1.put("url", "api/v2/pokemon/1");
+		
+		Map<String, String> jasonObject2 = new HashMap<String, String>();
+		jasonObject2.put("name", "ivysaur");
+		jasonObject2.put("url", "api/v2/pokemon/2");
+		
+		Map<String, String> jasonObject3 = new HashMap<String, String>();
+		jasonObject3.put("name", "venusaur");
+		jasonObject3.put("url", "api/v2/pokemon/3");
+		
+		jasonlist.add(jasonObject1);
+		jasonlist.add(jasonObject2);
+		jasonlist.add(jasonObject3);
+		
+		System.out.println(jason);
+		
+		
+	}
+
+}

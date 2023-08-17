@@ -1,0 +1,13 @@
+package exercise_class;
+
+
+
+public class Exam {
+
+	public static void main(String[] args) {
+		Vechicle vechicle = new Car("red");
+		vechicle.run();
+
+	}
+
+}

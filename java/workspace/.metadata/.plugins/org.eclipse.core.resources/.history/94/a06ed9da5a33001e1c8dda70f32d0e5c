@@ -1,0 +1,73 @@
+package j17_컬랙션.user;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class Main {
+
+	public static void main(String[] args) {
+		/*
+		 * {
+		 * "no" : 1
+		 * "message" : "1page list"
+		 * "data" : [
+		 * 			{
+		 * 				"name" : "홍길동"
+		 * 				"주소" : "부산광역시 서구"
+		 * 				"연락처" : "010-1234-5678"
+		 * 				"성별" : 1
+		 * 			},
+		 * 			{
+		 * 				"name" : "홍길서"
+		 * 				"주소" : "부산광역시 동래구"
+		 * 				"연락처" : "010-1111-2222"
+		 * 				"성별" : 0
+		 * 			}
+		 * 			]
+		 * ...
+		 * }
+		 * 
+		 * dataMap
+		 * LIST
+		 * info
+		 * info2 
+		 */
+		
+		Map<Object, Object> dataMap = new HashMap<Object, Object>();
+		ArrayList<Object> list = new ArrayList<Object>();
+		HashMap<String,Object> info1 = new HashMap<String, Object>();
+		HashMap<String,Object> info2 = new HashMap<String, Object>();
+		
+		list.add(info1);
+		list.add(info2);
+		
+		dataMap.put("no", 1);
+		dataMap.put("message", "1page list");
+		dataMap.put("data", list);
+		
+		info1.put("name", "홍길동");
+		info1.put("주소", "부산광역시 서구");
+		info1.put("연락처", "010-1234-5678");
+		info1.put("성별", 1);
+		
+		info2.put("name", "홍길서");
+		info2.put("주소", "부산광역시 동래구");
+		info2.put("연락처", "010-1111-2222");
+		info2.put("성별", 0);
+		
+		Iterator<Object> irKey = dataMap.keySet().iterator();
+		while(irKey.hasNext()) {
+			System.out.println(dataMap.get(irKey.next()));
+			for(int i =0; i < list.size(); i++ ) {
+				System.out.println(list.get(i));
+			}
+		}
+	
+		
+		
+
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;StringHashSet.java&apos; to &apos;JavaStudy-2023-06-17-pjw/src/j17_컬랙션.HashSet&apos;&#x0D;&#x0A;- Original project: &apos;JavaStudy-2023-06-17-pjw&apos;&#x0D;&#x0A;- Destination element: &apos;JavaStudy-2023-06-17-pjw/src/j17_컬랙션.HashSet&apos;&#x0D;&#x0A;- Original element: &apos;j17_컬랙션.HashMap.StringHashSet.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src&lt;j17_컬랙션.HashSet" element1="/src&lt;j17_컬랙션.HashMap{StringHashSet.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1690695933980" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,262 @@
+::-ms-reveal{
+    display: none;
+}
+
+@font-face {
+    font-family: 'Pretendard Variable';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GimhaeGaya';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/GimhaeGayaR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    font-family: 'Pretendard Variable';
+}
+
+#navigation{
+    /*height는 피그마에서 크기 제서가 아니라 패딩 탑,바텀, 등 더해서 확인 */
+    padding: 18px 120px;
+    height: 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigation-left {
+    display: flex;
+    align-items: center;
+
+}
+
+.logo-fill-icon{
+    width: 24px;
+    height: 24px;
+
+    background-image: url(asset/edit-fill.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.navigation-logo-text{
+    margin-left: 10px;
+
+    color: rgba(0, 0, 0, 1);
+    font-family: 'GimhaeGaya';
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+}
+
+.navigation-left:hover{
+    cursor: pointer;
+}
+
+.navigation-rifht{
+
+}
+
+.icon-button{
+    width: 24px;
+    height: 24px;
+}
+
+.icon-button:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+.search-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url(asset/search-light.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+#main {
+    padding: 100px 120px 150px;
+    height: calc(100vh - 64px - 100px - 150px);
+
+    background-image: url(asset/sign-in-background.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+
+.main-container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 1.666667vw;
+}
+
+.main-left {
+    grid-column: 1 / 8;
+
+    height: 100%;
+}
+
+.main-jumbotron-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-jumbotron-box-image {
+    width: 50px;
+    height: 50px;
+    background-image: url(asset/edit-light.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.main-jumbotron-text-box{
+    margin: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.main-jumbotron-box-text {
+    color: rgba(255, 255, 255, 1);
+    font-family: GimhaeGaya;
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: -1.2px;
+}
+
+.main-right {
+    grid-column: 8 / 13;
+    height: 100%;
+}
+
+.main-right-card {
+    border-radius: 10px;
+    padding: 50px 50px 30px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 47px 0px rgba(0, 0, 0, 0.25);
+}
+
+.main-card-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.main-card-title{
+    color: rgba(0, 0, 0, 1);
+    font-size: 24px;    
+    font-weight: 500;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-lable {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.input-container {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding-right: 16px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    border: none;
+    outline: none;
+
+    flex: 1;
+
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-weight: 400;
+    background: none;
+}
+
+.eye-close-icon{
+    width: 24px;
+    height: 24px;
+
+    background-image: url(asset/eye-light-off.png);
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.sign-in-button {
+    border-radius: 46px;
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+
+    background-color: rgba(0, 0, 0, 1);
+
+}
+
+.sign-in-button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.main-card-description{
+    margin-top: 20px;
+
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.border {
+    color: black;
+    font-weight: 900;
+}
+
+.border:hover{
+    cursor: pointer;
+}
