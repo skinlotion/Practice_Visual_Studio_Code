@@ -1,3 +1,4 @@
+import { type } from 'os';
 import React from 'react'
 
 export default function Typescript() {
@@ -39,7 +40,15 @@ export default function Typescript() {
     //! 10) 커스텀 객체 타입 설정해주는 법
     // 1. class
     // 2. interface
+    interface Object2 {
+        name : string;
+        age : number;
+    }
     // 3. type
+    type object3 = {
+        name : string,
+        age : number;
+    }
 
     class Object1 {
         name : string;
@@ -51,18 +60,56 @@ export default function Typescript() {
         }
     }
 
-
-
     let object2 : Object1 = {
         name : '김길동',
         age : 30 
     };
     
+    interface Object4 {
+        telNumber : string;
+        address? : string;
+    }
+
+    const object3 : Object2 & Object4 = {
+        name : '김길동',
+        age : 30 ,
+        telNumber : '1234',
+        // address : 'wqe' 이게 없게 끔 할려면 Object4에서 address 뒤에 ? 붙힘 (필수가 아니다 표시!)
+    };
+
+    //!  객체의 요소 뽑아 오는 법
+    // const name = object3.name;
+    // const age = object3.age;
+    // const telNumber = object3.telNumber;
+
+    const { name, age, ...other } = object3;
+
+    // other : {
+    //     telNumber : '1234',
+    //     address : 'wqe'
+    // }
+
+    let object4 : any;
+
+    object4 = {other, birth : '1993'}
+    object4 = {...other, birth : '1993'}
     
+    //! 함수를 지정하는 방법
+    function fun1() : string{
+        return 'a';
+    }
+
+    let func2 : () => string = (): string => {
+        return 'a';
+    }
+    // ! 스프레드 
+    const array = [1, 2, 3, 4];
+    const [first, second, ...others] = array;
+
     object2.name;
     
 
   return (
-    <div>Typescript</div>
+    <div>{name}</div>
   )
 }
