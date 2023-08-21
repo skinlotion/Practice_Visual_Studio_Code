@@ -34,7 +34,7 @@ export default function Typescript() {
     let variable7 : any = 1;
 
 
-    // 9) | : 유니온 타입 (or연산자)
+    // 9) | : 유니온 타입 (or연산자) 하나의 변수에 여러개의 타입을 지정할 수 있다.
     let variable8 : string | null; //문자와 숫자 두개 다 받을 수 있다 / 배열은 못옴
  
     //! 10) 커스텀 객체 타입 설정해주는 법
@@ -76,6 +76,10 @@ export default function Typescript() {
         telNumber : '1234',
         // address : 'wqe' 이게 없게 끔 할려면 Object4에서 address 뒤에 ? 붙힘 (필수가 아니다 표시!)
     };
+
+    //! 리터럴 타입 : 리터럴 자체를 타입으로 명시 - 지정된 리터럴 값만 가질 수 있음.
+    type Gender = '남' | '여';
+    let gender : Gender = '남';     // '남' , '여'  말고 다른 타입이 되면 오류 뜸
 
     //!  객체의 요소 뽑아 오는 법
     // const name = object3.name;
