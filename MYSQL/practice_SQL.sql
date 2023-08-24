@@ -6,5 +6,12 @@ CREATE TABLE prctice_table (
     phone_number INT,
     age INT
     );
+
+ALTER TABLE practice_table ADD address_number INT;
+ALTER TABLE practice_table ADD address_number;
+ALTER TABLE practice_table ADD address_number;
+ALTER TABLE practice_table ADD address_number;
+
+
     
 

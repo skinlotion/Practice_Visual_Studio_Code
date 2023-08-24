@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import InputBox from 'components/InputBox';
+import BoardListItem from 'components/BoardListItem';
+import { currentBoardListMock } from 'mocks';
 
 function App() {
-  return (
-   <>
-    <InputBox />
-   </>
+  return(
+    <>
+      {currentBoardListMock.map((item) => (<BoardListItem boardItem={item} />)) }
+      
+    </>
   );
 }
 
