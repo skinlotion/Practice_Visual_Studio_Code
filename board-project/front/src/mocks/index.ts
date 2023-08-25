@@ -1,3 +1,9 @@
 import currentBoardListMock from "./current-board-list.mock";
+import top3ListMock from "./top3-list.mok";
+import commentListMock from "./comment-list.mock";
 
-export {currentBoardListMock};
+export {
+    top3ListMock,
+    currentBoardListMock,
+    commentListMock
+};
