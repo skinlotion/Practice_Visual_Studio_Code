@@ -103,7 +103,7 @@
     color: rgba(0, 0, 0, 0.5);
     font-size: 14px;
     font-weight: 500;
-    line-height: 140%; /* 19.6px */
+    line-height: 140%;
 }
 
 .mypage-button:hover {
@@ -133,3 +133,70 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.upload-button {
+    border-radius : 46px;
+    width : 95px;
+    height : 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: rgba(0, 0, 0, 1);
+
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.upload-button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+.upload-button-disable {
+    border-radius : 46px;
+    width : 95px;
+    height : 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: rgba(0, 0, 0, 0.4);
+
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+
+.upload-button-disable:hover {
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.logout-button {
+    width: 93px;
+    height: 28px;
+
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.logout-button:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+}
