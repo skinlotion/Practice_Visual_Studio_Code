@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, KeyboardEvent,forwardRef } from 'react';
 import './style.css';
 
 //            interface : Input 상자 컴포넌트 Props           //
@@ -11,35 +11,44 @@ interface Props {
   setValue : Dispatch<SetStateAction<string>>
   icon? : string;
   errorMessage? : string;
+  onKeyDown? : (event : KeyboardEvent<HTMLInputElement>) => void;
   onButtonClick? : () => void;
 }
 
 //            component : Input 상자 컴포넌트                    //
-export default function InputBox(props : Props) {
+const InputBox = forwardRef((props : Props, ref)=>{
 
-//            state : Properties                                 //
-    const {label, type, error, placeholder, value, icon, errorMessage} = props;
-    const {setValue ,onButtonClick} = props;
+  //            state : Properties                                 //
+  const {label, type, error, placeholder, value, icon, errorMessage} = props;
+  const {setValue, onKeyDown, onButtonClick} = props;
 
 //            event handler : input 값 변경 이벤트 처리         //
-    const onInputValueChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setValue(value);
-    }
-
+  const onInputValueChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  }
+//            event handler : input 값 변경 이벤트 처리             //
+  const onKeyDownHandler = (event : KeyboardEvent<HTMLInputElement>) => {
+    if (!onKeyDown) return;
+    onKeyDown(event);
+  }
 //            render : Input 상자 랜더링                        //
-  return (
-    <div className = 'inputbox'>
-      <div className='inputbox-label'>{label}</div>
-      <div className={error ? 'inputbox-container-error' : 'inputbox-container'}>
-        <input className='input' type = {type} placeholder={placeholder} value={value} onChange={onInputValueChangeHandler}/>
-        { onButtonClick !== undefined && (
-           <div className='icon-button' onClick={onButtonClick}> 
-            {icon !== undefined && <div className={icon}></div> }
-          </div>
-        )}
-      </div>
-      <div className='inputbox-message'>{errorMessage}</div>
+return (
+  <div className = 'inputbox'>
+    <div className='inputbox-label'>{label}</div>
+    <div className={error ? 'inputbox-container-error' : 'inputbox-container'}>
+      <input ref={ref} className='input' type = {type} placeholder={placeholder} value={value} onChange={onInputValueChangeHandler} onKeyDown={onKeyDownHandler}/>
+      { onButtonClick !== undefined && (
+         <div className='icon-button' onClick={onButtonClick}> 
+          {icon !== undefined && <div className={icon}></div> }
+        </div>
+      )}
     </div>
-  )
-}
+    <div className='inputbox-message'>{errorMessage}</div>
+  </div>
+)
+
+});
+
+
+export default InputBox;

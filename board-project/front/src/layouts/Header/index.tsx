@@ -149,33 +149,33 @@ export default function Header() {
     }
     
     //            component: 유저 페이지 버튼 컴포넌트          //
-    const UserpageButtons = () => {
+    const UserPageButtons = () => {
 
-      //            state : path variable의 email 상태            //
-      const{email} = useParams();
-
-      //            variable : 마이페이지 여부 논리 변수            //
-      const isMypage = user && user.email === email;
-
-      //            event Handler : 로그아웃 버튼 클릭 이벤트 처리            /
+      //          state: path variable의 email 상태          //
+      const { email } = useParams();
+  
+      //          variable: 마이페이지 여부 논리 변수          //
+      const isMyPage = user && user.email === email;
+  
+      //          event handler: 로그아웃 버튼 클릭 이벤트 처리          //
       const onLogoutButtonClickHandler = () => {
-        setCookies('email', '', {path : '/', expires : new Date() });
+        setCookies('email', '', { path: '/', expires: new Date() });
         setUser(null);
       }
-
-      //            render : 본인 페이지 일 때 버튼 컴포넌트 랜더링             //
-      if(isMypage)
-      return (<div className='logout-button' onClick={onLogoutButtonClickHandler}>로그아웃</div>)
-
-      //            render : 타인 페이지 일 때 버튼 컴포넌트 랜더링             //
-      // return (<LoginMypageButton />);
+  
+      //          render: 본인 페이지 일 때 버튼 컴포넌트 렌더링          //
+      if (isMyPage)
+      return (<div className='logout-button' onClick={onLogoutButtonClickHandler}>로그아웃</div>);
+      //          render: 타인 페이지 일 때 버튼 컴포넌트 렌더링          //
+      return (<LoginMyPageButton />);
     }
 
     //            effect: 마운트시에만 실행될 함수          //
     useEffect(() => {
-      setCookies('email', 'email@email.com', {path : '/'})
-      const user : LoginUser = {email : 'email@email.com', nickname : '힘가둑', profileImage : null}
-      setUser(user);
+      if (cookies.eamil) {
+        const user: LoginUser = {email : cookies.email, nickname : '주코야키', profileImage : null};
+        setUser(user);
+      }
       // setCookies('email', 'email@eamil.com', {path : '/' , expires : new Date() });
     }, []);
 
@@ -194,7 +194,7 @@ export default function Header() {
           { isMainPage && (<> <Search /> <LoginMyPageButton/> </>)}
           { isSearchPage && (<> <Search /> <LoginMyPageButton/> </>) }
           { isBoardDetailPage && (<> <Search /> <LoginMyPageButton/> </>) }
-          { isUserPage && (<UserpageButtons />) }
+          { isUserPage && (<UserPageButtons />) }
           { isBoardWritePage && (<UploadButton />) }
           { isBoardUpdatePage && (<UploadButton />) }
 
