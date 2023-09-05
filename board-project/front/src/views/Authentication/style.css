@@ -120,6 +120,44 @@
 
     white-space: pre-wrap;
 }
+.auth-consent-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.auth-check-box{
+    width: 24px;
+    height: 24px;
+}
+
+.auth-check-box:hover{
+    cursor: pointer;
+}
+
+.auth-consent-title{
+    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.auth-consent-title-error{
+    color: red;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.auth-consent-link {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+
+    cursor: pointer;
+}
+
 
 .auth-button{
     border-radius: 46px;

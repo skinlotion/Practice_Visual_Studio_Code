@@ -2,6 +2,8 @@ import React from 'react';
 import './style.css';
 import DefualtProfileImage from 'assets/defult-profile-image.png';
 import { BoardItem } from 'types';
+import { useNavigate } from 'react-router-dom';
+import { BOARD_DETAIL_PATH } from 'constant';
 
 //            interface : 게시물 리스트 아이템 컴포넌트 Props                //
 interface Props {
@@ -18,11 +20,13 @@ export default function BoardListItem({ boardItem }: Props) {
   const { viewCount, commentCount, favoritCount, writeDatetime } = boardItem;
   const { nickname, profileImageUrl } = boardItem;
 
+  //            function : 네비게이트 함수                              //
+  const navigator = useNavigate();
 
   //            event handler : Card Click 이벤트 처리 함수             //
   const onCardClickHandler = () => {
     // TODO : 카드 클릭 이벤트 처리 - 해당 게시물 번호 상세 페이지로 이동
-    alert(boardNumber);
+    navigator(BOARD_DETAIL_PATH(boardNumber));
   }
 
 
