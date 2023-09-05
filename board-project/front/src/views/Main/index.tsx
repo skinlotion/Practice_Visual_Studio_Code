@@ -42,6 +42,14 @@ export default function Main() {
     const [popularWordList, setPopularWordList] = useState<string[]> ([]);
     //            state: 최신게시물 리스트 상태           //
     const [latestBoardList, setLatestBoardList] = useState<BoardItem[]>([]);
+    //            state : 현재 페이지 번호 상태             //
+    const [currentPageNumber, setCurrentPageNumber] = useState<number> (1);
+    //            state : 현재 색션 번호 상태             // 
+    const [currentSectionNumber, setCurrentSectionNumber] = useState<number>(1);
+    //            state: 보여줄 게시물 리스트 상태           //
+    const [viewBoardList, setViewBoardList] = useState<BoardItem[]>([]);
+    //            state: 보여줄 페이지 번호 리스트 상태           //
+    const [viewPageNumberList, setViewPageNumberList] = useState<number[]>([]);
 
     //            function : 네비게이트 함수            //
     const navigator = useNavigate();
@@ -56,16 +64,32 @@ export default function Main() {
       //TODO : API호출로 변경
       setPopularWordList(popularWordListMock);
       setLatestBoardList(currentBoardListMock);
+
+
+
     },[]);
 
+    useEffect (() => {
+      // const tmpList = [];
+      // for(let index = 5 * (currentPageNumber - 1); index < 5 * currentPageNumber; index++){
+      //   if(currentBoardListMock.length === index)break;
+      //   tmpList.push(currentBoardListMock[index]);
+      // }
+      const FISRT_INDEX = 5 * (currentPageNumber - 1);
+      const LAST_INDEX = 5 * currentPageNumber;
+      const tmpList = currentBoardListMock.filter((item,index) => (index >= FISRT_INDEX && index < LAST_INDEX));
+
+      setViewBoardList(tmpList);
+    },[currentPageNumber])
     //            render : 메인 하단 컴포넌트 랜더링           //
     return(
       <div id='main-bottom-wrapper'>
         <div className='main-bottom-container'>
+          <button onClick={()=>setCurrentPageNumber(currentPageNumber+1)}>+</button>
           <div className='main-bottom-title'>{'최신 게시물'}</div>
           <div className='main-bottom-contents-box'>
             <div className='main-bottom-latest-contents-box'>
-              {latestBoardList.map(boardItem => <BoardListItem boardItem={boardItem} /> )}
+              {viewBoardList.map(boardItem => <BoardListItem boardItem={boardItem} /> )}
             </div>
             <div className='main-bottom-popular-word-box'>
               <div className='main-bottom-popular-word-card'>
