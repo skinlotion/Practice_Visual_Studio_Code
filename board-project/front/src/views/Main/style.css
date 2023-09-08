@@ -121,21 +121,6 @@
     gap: 12px;
 }
 
-.word-badge {
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 30px;
-
-    display: inline-block;
-    padding: 4px 20px;
-}
-
-.word-badge:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.01);
-}
-
-
-
 .main-bottom-pagination-box {
     margin-top: 60px;
     
