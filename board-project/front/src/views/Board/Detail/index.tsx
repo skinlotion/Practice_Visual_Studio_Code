@@ -8,7 +8,7 @@ import { useUserStore } from 'stores';
 import { usePagination } from 'hooks';
 import CommentListItem from 'components/CommentListItem';
 import Pageination from 'components/Pagination';
-import { BOARD_UPDATE_PATH, MAIN_PATH } from 'constant';
+import { BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from 'constant';
 
 //            component : 게시물 상세보기 페이지            //
 export default function BoardDetail() {
@@ -30,6 +30,11 @@ export default function BoardDetail() {
     //            state : 게시물 상태           //
     const [board, setBoard] = useState<Board | null>(null);
 
+    //            event handler : 작성자 클릭 이벤트 처리           //
+    const onNicknameClickHandler = () => {
+      if (!board) return;
+      navigator(USER_PATH(board.writerEmail))
+    }
     //            event handler : more button 클릭 이벤트 처리            // 
     const onMoreButtonClickHandler = () => {
       setShowMore(!showMore);
@@ -61,7 +66,7 @@ export default function BoardDetail() {
           <div className='board-detail-sub-box'>
             <div className='board-detail-write-info-box'>
               <div className='board-detail-writer-profil-image' style={{ backgroundImage:`url(${DefaultProfileImage})` }}></div>
-              <div className='board-detail-writer-nickname'>{board?.nickname}</div>
+              <div className='board-detail-writer-nickname' onClick={onNicknameClickHandler}>{board?.nickname}</div>
               <div className='board-detail-info-divider'>{'\|'}</div>
               <div className='board-detail-write-date'>{board?.writeDatetime}</div>
             </div>
@@ -100,13 +105,13 @@ export default function BoardDetail() {
     const { currentPageNumber, setCurrentPageNumber, currentSectionNumber, setCurrentSectionNumber, viewBoardList, viewPageNumberList, totalSection, setBoardList,} = usePagination<CommentItem>(3);
     //            state : 댓글 개수 상태           //
     const [commentsCount, setCommnetsCount] = useState<number>(0);
-
+    //          state: 좋아요 상태          //
+    const [isFavorite, setFavorite] = useState<boolean>(false);
     //            state : 좋아요 박스 상태            //
     const [showFavorite, setShowFavorite] = useState<boolean>(false);
     //            state : 댓글박스 상태           //
     const [showComments, setShowComments] = useState<boolean>(false);
-    //            state : 좋아요 상태           //
-    const [isFavorite, setFavorite] = useState<boolean>(false);
+    
     //            state :  댓글 상태           //
     const [comment, setComment] = useState<string>('');
 

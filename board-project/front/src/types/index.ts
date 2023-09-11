@@ -3,6 +3,7 @@ import BoardItem from './board-item.interface';
 import CommentItem from './comment-item.interface';
 import Board from './board.interface';
 import FavoriteItem from './favorite-item.interface'; 
+import User from './user.interface';
 
 export type { 
     BoardItem, 
@@ -10,4 +11,5 @@ export type {
     LoginUser,
     Board,
     FavoriteItem,
+    User,
  };

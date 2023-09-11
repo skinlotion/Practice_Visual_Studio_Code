@@ -7,6 +7,8 @@ import searchListMock from "./search-list.mock";
 import relationWordListMock from "./relation-word-list.mock";
 import boardMock from "./board.mock";
 import favoriteListMock from "./favorit-list.mock";
+import userMock from "./user.mock";
+import userBoardListMock from "./user-board-list.mock";
 
 export {
     top3ListMock,
@@ -18,4 +20,6 @@ export {
     relationWordListMock,
     boardMock,
     favoriteListMock,
+    userMock,
+    userBoardListMock,
 };
