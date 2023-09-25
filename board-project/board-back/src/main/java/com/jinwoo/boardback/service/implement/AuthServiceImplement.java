@@ -5,12 +5,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.jinwoo.boardback.dto.request.auth.SignInRequestDto;
 import com.jinwoo.boardback.dto.request.auth.SignUpRequestDto;
 import com.jinwoo.boardback.dto.response.ResponseDto;
+import com.jinwoo.boardback.dto.response.auth.SignInResponseDto;
 import com.jinwoo.boardback.dto.response.auth.SignUpResponseDto;
 import com.jinwoo.boardback.entity.UserEntity;
+import com.jinwoo.boardback.provider.JwtProvider;
 import com.jinwoo.boardback.repository.UserRepository;
 import com.jinwoo.boardback.service.AuthService;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImplement implements AuthService{
 
     private final UserRepository userRepository;
+    private final JwtProvider JwtProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -53,5 +58,31 @@ public class AuthServiceImplement implements AuthService{
 
         return SignUpResponseDto.succes();
     }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto ) {
+        
+        String token = null;
+        
+        try {
+            String email = dto.getEmail();
+            UserEntity userEntity = userRepository.findByEmail(email);
+            if (userEntity == null) return SignInResponseDto.signInFailed();
+
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if (!isMatched) return SignInResponseDto.signInFailed();
+
+            token = JwtProvider.create(email);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.dataBaseError();
+        }
+        return SignInResponseDto.success(token);
+    }
     
 }
+

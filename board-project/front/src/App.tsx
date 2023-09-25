@@ -13,23 +13,43 @@ import User from 'views/User';
 import Container from 'layouts/Container';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useUserStore } from 'stores';
+import { Cookies, useCookies } from 'react-cookie';
+import { GetSignInUserResponseDto } from 'apis/dto/response/user';
+import ResponseDto from 'apis/dto/response';
+import { getSignInUserRequest } from 'apis';
 
 function App() {
-  const serverCheck = async () => {
-    const response = await axios.get("http://localhost:4000");
-    return response.data;
+  //            state : 현재 페이지 url 상태           //
+  const {pathname} = useLocation();
+
+  //            state : 로그인 유저 상태           //
+  const {user, setUser } = useUserStore();
+
+  //            state : cookie 상태           //
+  const [cookies, setCookie] = useCookies();
+
+  //            function : get sign in user response 처리 함수           //
+  const getSignInUserResponse = (responseBody : GetSignInUserResponseDto | ResponseDto) => {
+    const { code } = responseBody;
+    if (code !== 'SU') {
+      setCookie('accessToken', '', {expires: new Date(), path : MAIN_PATH});
+      setUser(null);
+      return;
+    }
+    setUser({...responseBody as GetSignInUserResponseDto });
   }
-
+  //            effect : 현재 path가 변경될떄마다 실행될 함수           //
   useEffect(() => {
-        serverCheck()
-          .then((data) => console.log(data))
-          .catch((error) => {
-            console.log(error.response.data);
-          });
-  },[]);
+    const accessToken = cookies.accessToken;
+    if(!accessToken) {
+      setUser(null);
+      return;
+    }
+    getSignInUserRequest(accessToken).then(getSignInUserResponse);
+  },[pathname]);
 
-  const { pathname } = useLocation();
-
+ 
   return (
     <Routes>
       <Route element={<Container />}>
