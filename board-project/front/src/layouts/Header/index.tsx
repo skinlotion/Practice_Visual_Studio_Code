@@ -20,7 +20,7 @@ export default function Header() {
   const [cookies, setCookies] = useCookies();
 
   //            variable : 인증 페이지 논리 변수            // 
-  const isAuthpage = pathname === AUTH_PATH;
+  const isAuthPage = pathname === AUTH_PATH;
   //            variable : 메인 페이지 논리 변수            // 
   const isMainPage = pathname === MAIN_PATH;
   //            variable : 검색 페이지 논리 변수             // 
@@ -102,7 +102,7 @@ export default function Header() {
 
       //             event handler : 마이페이지 버튼 클릭 이벤트 처리          //
       const onMyPageButtonClickHandler = () => {
-        if (!user) return;
+        if(!user) return;
         navigator(USER_PATH(user.email));
       }
 
@@ -117,10 +117,10 @@ export default function Header() {
         <div className='mypage-button' onClick={onMyPageButtonClickHandler}>마이페이지</div>
       )
       
-      //            render : 마이페이지 버튼 컴포넌트 (로그인 상태 아닐 때) 랜더링            /
+      //            render : 로그인 버튼 컴포넌트 (로그인 상태 아닐 때) 랜더링            /
       return (
         <div className='login-button' onClick={onLoginButtonClickHandler}>로그인</div>
-      )
+      );
     }
 
     //            component: 업로드 버튼 컴포넌트          //
@@ -152,10 +152,10 @@ export default function Header() {
     const UserPageButtons = () => {
 
       //          state: path variable의 email 상태          //
-      const { searchemail } = useParams();
+      const { searchEmail } = useParams();
   
       //          variable: 마이페이지 여부 논리 변수          //
-      const isMyPage = user && user.email === searchemail;
+      const isMyPage = user && user.email === searchEmail;
       
       //          event handler: 로그아웃 버튼 클릭 이벤트 처리          //
       const onLogoutButtonClickHandler = () => {
@@ -190,9 +190,9 @@ export default function Header() {
           <div className='header-logo-text'>{'Hoons Board'}</div>
         </div>
         <div className='header-right-box'>
-          { isAuthpage && (<Search />) }
-          { isMainPage && (<> <Search /> <LoginMyPageButton/> </>)}
-          { isSearchPage && (<> <Search /> <LoginMyPageButton/> </>) }
+          { isAuthPage && (<Search />) }
+          { isMainPage && (<><Search /> <LoginMyPageButton/> </>)}
+          { isSearchPage && (<><Search /> <LoginMyPageButton/> </>) }
           { isBoardDetailPage && (<> <Search /> <LoginMyPageButton/> </>) }
           { isUserPage && (<UserPageButtons />) }
           { isBoardWritePage && (<UploadButton />) }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.jinwoo.boardback.dto.response.ResponseDto;
 import com.jinwoo.boardback.dto.response.user.GetSignInUserResponseDto;
+import com.jinwoo.boardback.dto.response.user.GetUserResponseDto;
 import com.jinwoo.boardback.entity.UserEntity;
 import com.jinwoo.boardback.repository.UserRepository;
 import com.jinwoo.boardback.service.UserService;
@@ -32,5 +33,21 @@ public class UserServiceImplemnet implements UserService{
             return ResponseDto.dataBaseError();
         }
         return GetSignInUserResponseDto.success(userEntity);
+    }
+
+    @Override
+    public ResponseEntity<? super GetUserResponseDto> getUser(String email) {
+        
+        UserEntity userEntity = null;
+
+        try {
+            userEntity = userRepository.findByEmail(email);
+            if ( userEntity == null) return GetUserResponseDto.notExistUser();
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.dataBaseError();
+        }
+        return GetUserResponseDto.success(userEntity); 
     }
 }
