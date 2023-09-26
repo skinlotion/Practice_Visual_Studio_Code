@@ -3,11 +3,11 @@ import { create } from 'zustand';
 interface BoardStore {
     title : string;
     contents : string;
-    image : File | null;
+    images : File[];
 
     setTitle : (title : string) => void;
     setContents : (contents : string) => void;
-    setImage : (image : File | null) => void;
+    setImage : (images : File[]) => void;
 
     resetBoard : () => void;
 
@@ -17,12 +17,12 @@ interface BoardStore {
 const useBoardStore = create<BoardStore>((set) => ({ 
     title : '',
     contents : '',
-    image : null,
+    images : [],
 
     setTitle : (title : string) => { set((state) => ({...state, title}))},
     setContents : (contents : string) => {set((state) => ({...state, contents}))},
-    setImage : (image : File | null) => {set((state) => ({...state, image}))},
-    resetBoard : () => {set((state) => ({...state, title : '', contents : '', image : null}))}
+    setImage : (images : File[]) => {set((state) => ({...state, images}))},
+    resetBoard : () => {set((state) => ({...state, title : '', contents : '', images : []}))}
 }));
 
 export default useBoardStore;

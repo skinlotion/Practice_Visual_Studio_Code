@@ -5,6 +5,7 @@ import { AUTH_PATH, MAIN_PATH, BOARD_WRITE_PATH, SEARCH_PATH, BOARD_DETAIL_PATH,
 import { useCookies } from 'react-cookie';
 import { useBoardStore, useUserStore } from 'stores';
 import { LoginUser } from 'types';
+import { fileUploadRequest } from 'apis';
 
 
 //            component : 헤더 컴포넌트                //
@@ -126,10 +127,21 @@ export default function Header() {
     //            component: 업로드 버튼 컴포넌트          //
     const UploadButton = () => {
     //            state: 게시물 제목, 내용, 이미지 전역 상태       //
-      const { title, contents, image, resetBoard } = useBoardStore();
+      const { title, contents, images, resetBoard } = useBoardStore();
 
       //             event handler : 업로드 버튼 클릭 이벤트 처리          //
       const onUplodeButtonClickHandler = () => {
+        
+        const boardImageList : string[] = [];
+
+        images.forEach(async image => {
+          const data = new FormData();
+          data.append('file', image);
+
+          const url = await fileUploadRequest(data);
+          if(url) boardImageList.push(url);
+        });
+        
         if (isBoardWritePage) {
           alert('작성');
           resetBoard();
