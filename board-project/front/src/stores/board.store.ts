@@ -1,28 +1,27 @@
 import { create } from 'zustand';
 
 interface BoardStore {
-    title : string;
-    contents : string;
-    images : File[];
+    title: string;
+    contents: string;
+    images: File[];
 
-    setTitle : (title : string) => void;
-    setContents : (contents : string) => void;
-    setImage : (images : File[]) => void;
+    setTitle: (title: string) => void;
+    setContents: (contents: string) => void;
+    setImages: (images: File[]) => void;
 
-    resetBoard : () => void;
-
+    resetBoard: () => void;
 }
 
+const useBoardStore = create<BoardStore>((set) => ({
+    title: '',
+    contents: '',
+    images: [],
 
-const useBoardStore = create<BoardStore>((set) => ({ 
-    title : '',
-    contents : '',
-    images : [],
+    setTitle: (title: string) => {set((state) => ({ ...state, title }))},
+    setContents: (contents: string) => {set((state) => ({ ...state, contents }))},
+    setImages: (images: File[]) => {set((state) => ({ ...state, images }))},
 
-    setTitle : (title : string) => { set((state) => ({...state, title}))},
-    setContents : (contents : string) => {set((state) => ({...state, contents}))},
-    setImage : (images : File[]) => {set((state) => ({...state, images}))},
-    resetBoard : () => {set((state) => ({...state, title : '', contents : '', images : []}))}
+    resetBoard: () => {set((state) => ({ ...state, title: '', contents: '', images: [] }))}
 }));
 
 export default useBoardStore;

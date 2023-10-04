@@ -3,10 +3,10 @@ import './style.css';
 import { usePagination } from 'hooks';
 import { useNavigate, useParams } from 'react-router-dom';
 import { relationWordListMock, searchListMock } from 'mocks';
-import BoardListItem from 'components/BoardListItem';
+import BoardItem from 'components/BoardItem';
 import Pageination from 'components/Pagination';
 import { SEARCH_PATH } from 'constant';
-import { BoardItem } from 'types';
+import { BoardListItem } from 'types';
 
 
 //            component : 검색 페이지                //
@@ -17,7 +17,7 @@ export default function Search() {
   const [count, setCount] = useState<number>(0);
   //            state : 페이지네이션 관련 상태            //
   const {currentPageNumber, setCurrentPageNumber, currentSectionNumber, setCurrentSectionNumber,
-    viewBoardList, viewPageNumberList, totalSection, setBoardList,} = usePagination<BoardItem>(5);
+    viewBoardList, viewPageNumberList, totalSection, setBoardList,} = usePagination<BoardListItem>(5);
   //            state : 연관 검색어 리스트 상태            //
   const [relationWordList, setRelationWordList] = useState<string[]>([]);
 
@@ -53,7 +53,7 @@ export default function Search() {
           <div className='search-contents-result-nothing'>{'검색 결과가 없습니다.'}</div>
           ) : (
           <div className='search-contents-result-box'>
-            {viewBoardList.map(boardItem => <BoardListItem boardItem={boardItem}/> )}
+            {viewBoardList.map(boardItem => <BoardItem boardItem={boardItem}/> )}
           </div>
           )}
           <div className='search-relation-word-box'>

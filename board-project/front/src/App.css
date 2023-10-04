@@ -2,7 +2,7 @@
   border-radius: 50% 50%;
   width: 24px;
   height: 24px;
-
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,10 +10,10 @@
 
 .icon-button:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.icon-box{
+.icon-box {
   width: 24px;
   height: 24px;
 }
@@ -25,30 +25,27 @@
   background-image: url(assets/eye-off-icon.png);
   background-position: 50% 50%;
   background-size: 100% 100%;
-  background-repeat: none;
 }
 
 .eye-on-icon {
   width: 21px;
   height: 21px;
-  
+
   background-image: url(assets/eye-on-icon.png);
   background-position: 50% 50%;
   background-size: 100% 100%;
-  background-repeat: none;
 }
 
 .right-arrow-icon {
   width: 21px;
   height: 21px;
-  
+
   background-image: url(assets/right-arrow-icon.png);
   background-position: 50% 50%;
   background-size: 100% 100%;
-  background-repeat: none;
 }
 
-.check-ring-light-icon{
+.check-ring-light-icon {
   width: 100%;
   height: 100%;
 
@@ -57,7 +54,7 @@
   background-size: 100% 100%;
 }
 
-.check-round-fill-icon{
+.check-round-fill-icon {
   width: 100%;
   height: 100%;
 
@@ -66,121 +63,135 @@
   background-size: 100% 100%;
 }
 
-.right-light-icon{
+.left-light-icon {
+  width: 100%;
+  height: 100%;
+  
+  background-image: url(assets/left-light-icon.png);
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+}
+
+.right-light-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/right-light-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
-}
-.right-light-icon:hover{
-  cursor: pointer;
-}
-
-.left-light-icon {
-  width: 100%;
-  height: 100%;
-
-  background-image: url(assets/left-light-icon.png);
   background-size: 100% 100%;
-  background-position: 50% 50%;
-}
-.left-light-icon:hover{
-  cursor: pointer;
 }
 
-.more-icon{
+.more-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/more-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.comment-light-icon{
+.comment-light-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/comment-light-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.down-light-icon{
+.down-light-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/down-light-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.up-light-icon{
+.up-light-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/up-light-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.favorite-fill-icon{
+.favorite-fill-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/favorite-fill-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.favorite-light-icon{
+.favorite-light-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/favorite-light-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.edit-light-icon{
+.edit-light-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/edit-light-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.image-box-white-icon{
+.image-box-white-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/image-box-white-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
-.arrow-right-icon{
+.arrow-right-icon {
   width: 100%;
   height: 100%;
 
   background-image: url(assets/arrow-right-icon.png);
-  background-size: 100% 100%;
   background-position: 50% 50%;
+  background-size: 100% 100%;
+}
+
+.close-icon {
+  width: 100%;
+  height: 100%;
+
+  background-image: url(assets/close-icon.png);
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+}
+
+.image-box-light-icon {
+  width: 100%;
+  height: 100%;
+
+  background-image: url(assets/image-box-light-icon.png);
+  background-position: 50% 50%;
+  background-size: 100% 100%;
 }
 
 .word-badge {
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 30px;
 
-  display: inline-block;
   padding: 4px 20px;
+
+  display: inline-block;
 }
+
 .word-badge:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.01);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .divider {
@@ -191,4 +202,3 @@
 .emphasis {
   font-weight: bolder;
 }
-
