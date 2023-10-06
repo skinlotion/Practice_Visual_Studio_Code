@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jinwoo.boardback.dto.request.board.PatchBoardRequestDto;
 import com.jinwoo.boardback.dto.request.board.PostBoardRequestDto;
 import com.jinwoo.boardback.dto.response.board.GetBoardResponseDto;
+import com.jinwoo.boardback.dto.response.board.GetCommentListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetLatestBoardListResponseDto;
 import com.jinwoo.boardback.dto.response.board.PostBoardResponseDto;
@@ -83,6 +86,16 @@ public class BoardController {
         @AuthenticationPrincipal String email
     ){
         ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(boardNumber, email);
+        return response;
+    }
+
+    @PatchMapping("/{boardNumber}")
+    public ResponseEntity<? super PatchBoardResponseDto> patchBoard(
+        @RequestBody @Valid PatchBoardRequestDto requestDto,
+        @PathVariable("boardNumber") Integer boardNumber,
+        @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super PatchBoardResponseDto> response = boardService.patchBoard(boardNumber, email);
         return response;
     }
 }

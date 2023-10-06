@@ -11,6 +11,7 @@ import lombok.Getter;
 
 @Getter
 public class PostBoardResponseDto extends ResponseDto{
+    
     private PostBoardResponseDto(String code, String message) {
         super(code, message);
     }

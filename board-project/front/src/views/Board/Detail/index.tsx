@@ -37,6 +37,13 @@ export default function BoardDetail() {
     const [showMore, setShowMore] = useState<boolean>(false);
     //          state: 게시물 상태          //
     const [board, setBoard] = useState<Board | null>(null);
+
+    //            function : 작성일 포멧 변경 함수            //
+    const getWriteDatetimeFormat = (writeDateTime : string | undefined) => {
+      if (!writeDatetime) return '';
+      const date = dayjs
+    }
+      
     //            function : get board response 처리 함수           //
     const getBoardResponse = (responseBody : GetBoardResponseDto | ResponseDto) => {
       const {code} = responseBody;

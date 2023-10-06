@@ -2,6 +2,7 @@ package com.jinwoo.boardback.service;
 
 import org.springframework.http.ResponseEntity;
 
+import com.jinwoo.boardback.dto.request.board.PatchBoardRequestDto;
 import com.jinwoo.boardback.dto.request.board.PostBoardRequestDto;
 import com.jinwoo.boardback.dto.response.board.GetBoardResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetCommentListResponseDto;
@@ -22,4 +23,6 @@ public interface BoardService {
     ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList();
 
     ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email);
+
+    ResponseEntity<? super PatchBoardRequestDto> patchBoard(PatchBoardRequestDto Dto, Integer boardNumer, String email);
 }

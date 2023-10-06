@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import com.jinwoo.boardback.dto.response.ResponseCode;
 import com.jinwoo.boardback.dto.response.ResponseDto;
 import com.jinwoo.boardback.dto.response.ResponseMessage;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 
 import lombok.Getter;
 
@@ -18,7 +17,7 @@ public class PostCommentResponseDto extends ResponseDto{
     }
 
     public static ResponseEntity<PostCommentResponseDto> success() {
-        PostCommentResponseDto result = new PostCommentResponseDto(ResponseCode.SUCCES, ResponseMessage.SUCCES)
+        PostCommentResponseDto result = new PostCommentResponseDto(ResponseCode.SUCCES, ResponseMessage.SUCCES);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

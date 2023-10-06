@@ -8,9 +8,11 @@ import javax.validation.OverridesAttribute;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.jinwoo.boardback.dto.request.board.PatchBoardRequestDto;
 import com.jinwoo.boardback.dto.request.board.PostBoardRequestDto;
 import com.jinwoo.boardback.dto.response.ResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetBoardResponseDto;
+import com.jinwoo.boardback.dto.response.board.GetCommentListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetLatestBoardListResponseDto;
 import com.jinwoo.boardback.dto.response.board.PostBoardResponseDto;
@@ -29,126 +31,120 @@ import com.jinwoo.boardback.repository.FavoriteRepository;
 import com.jinwoo.boardback.repository.UserRepository;
 import com.jinwoo.boardback.repository.resultSet.CommentListResultSet;
 import com.jinwoo.boardback.service.BoardService;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 import com.jinwoo.boardback.dto.response.board.PutFavoriteResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImplement implements BoardService{
+public class BoardServiceImplement implements BoardService {
 
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
-    private final CommentRepository commentRepository;
-    private final FavoriteRepository favoriteRepository;
+    private final CommentRepository commentRespository;
+    private final FavoriteRepository favoriteRepository; 
     private final BoardViewRepository boardViewRepository;
     private final BoardImageRepository boardImageRepository;
 
     @Override
     public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
+        
         try {
             boolean existedUser = userRepository.existsByEmail(email);
-            if(!existedUser) return PostBoardResponseDto.notExistUser();
+            if (!existedUser) return PostBoardResponseDto.notExistUser();
 
             BoardEntity boardEntity = new BoardEntity(dto, email);
             boardRepository.save(boardEntity);
 
-            List<String>boardImageList = dto.getBoardImageList();
+            List<String> boardImageList = dto.getBoardImageList();
             Integer boardNumber = boardEntity.getBoardNumber();
 
             List<BoardImageEntity> boardImageEntities = new ArrayList<>();
-            for (String boardImage : boardImageList) {
+            for (String boardImage: boardImageList) {
                 BoardImageEntity boardImageEntity = new BoardImageEntity(boardNumber, boardImage);
                 boardImageEntities.add(boardImageEntity);
             }
+
             boardImageRepository.saveAll(boardImageEntities);
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
+
         return PostBoardResponseDto.success();
+
     }
 
     @Override
-    public ResponseEntity<? super GetBoardResponseDto> getboard(Integer boardNumber) {
+    public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email) {
+        
+        try {
+
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+            if (!existedBoard) return PostCommentResponseDto.notExistBoard();
+
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser) return PostCommentResponseDto.notExistUser();
+
+            CommentEntity commentEntity = new CommentEntity(dto, boardNumber, email);
+            commentRespository.save(commentEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PostCommentResponseDto.success();
+
+    }
+
+	@Override
+	public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
+
         BoardViewEntity boardViewEntity = null;
         List<BoardImageEntity> boardImageEntities = new ArrayList<>();
 
         try {
+
             boardViewEntity = boardViewRepository.findByBoardNumber(boardNumber);
             if (boardViewEntity == null) return GetBoardResponseDto.notExistBoard();
 
             boardImageEntities = boardImageRepository.findByBoardNumber(boardNumber);
-            
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
+
         return GetBoardResponseDto.success(boardViewEntity, boardImageEntities);
-    }
+
+	}
 
     @Override
-    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
-        
-        List<BoardViewEntity> boardViewEntities = new ArrayList<>();
-        
-        try {
-            boardViewEntities = boardViewRepository.findByOrderByWriteDatetimeDesc();
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.dataBaseError();
-        }
-        return GetLatestBoardListResponseDto.succes(boardViewEntities);
-    }
-
-    @Override
-    public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber) {
+    public ResponseEntity<? super GetFavoriteListResponseDto> getFavorietList(Integer boardNumber) {
         
         List<UserEntity> userEntities = new ArrayList<>();
 
         try {
+
             boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
             if (!existedBoard) return GetFavoriteListResponseDto.notExistBoard();
 
             userEntities = userRepository.findByBoardFavorite(boardNumber);
 
-        } catch (Exception exception) {
+        } catch(Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
+
         return GetFavoriteListResponseDto.success(userEntities);
+
     }
 
-    @Override
-    public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email) {
-        
-        try {
-            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
-            if (!existedBoard) return PutFavoriteResponseDto.notExistBoard();
-
-            boolean existedUser = userRepository.existsByEmail(email);
-            if(!existedUser) return PostBoardResponseDto.notExistUser();
-
-            boolean isFavorite = favoriteRepository.existsByUserEmailAndBoardNumber(email, boardNumber);
-            
-            FavoriteEntity favoriteEntity = new FavoriteEntity(email, boardNumber);
-            
-            if(isFavorite) favoriteRepository.delete(favoriteEntity);
-            else favoriteRepository.save(favoriteEntity);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.dataBaseError();
-        }
-        return PutFavoriteResponseDto.success();
-    }
     @Override
     public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber) {
-
+        
         List<CommentListResultSet> resultSets = new ArrayList<>();
 
         try {
@@ -166,24 +162,86 @@ public class BoardServiceImplement implements BoardService{
         return GetCommentListResponseDto.success(resultSets);
 
     }
+
     @Override
-    public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto) {
+    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
+
+        List<BoardViewEntity> boardViewEntities = new ArrayList<>();
+        
         try {
-            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
-            if(!existedBoard) return PostCommentResponseDto.notExistBoard();
 
-            boolean existedUser = userRepository.existsByEmail(email);
-            if(!existedUser) return PostCommentResponseDto.notExistUser();
-
-            CommentEntity commentEntity = new CommentEntity(dto, boardNumber, email);
-            commentRepository.save(commentEntity);
+            boardViewEntities = boardViewRepository.findByOrderByWriteDatetimeDesc();
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
-            
+            return ResponseDto.databaseError();
         }
-        return PostCommentResponseDto.success();
+
+        return GetLatestBoardListResponseDto.success(boardViewEntities);
+
     }
+
+    @Override
+    public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email) {
+        
+        try {
+
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+            if (!existedBoard) return PutFavoriteResponseDto.notExistBoard();
+
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser) return PutFavoriteResponseDto.notExistUser();
+
+            boolean isFavorite = favoriteRepository.existsByUserEmailAndBoardNumber(email, boardNumber);
+            
+            FavoriteEntity favoriteEntity = new FavoriteEntity(email, boardNumber);
+
+            if (isFavorite) favoriteRepository.delete(favoriteEntity);
+            else favoriteRepository.save(favoriteEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PutFavoriteResponseDto.success();
+
+    }
+    @Override
+    public ResponseEntity<? super PatchBoardRequestDto> patchBoard(PatchBoardRequestDto Dto, Integer boardNumer, String email) {
+        
+        try {
+
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser) return PatchBoardRequestDto.notExistUser();
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumer);
+            if( boardEntity == null ) return PatchBoardRequestDto.notExistBoard();
+
+            boolean equalWriter = boardEntity.getWriterEmail().equals(email);
+            if(!equalWriter) return PatchBoardRequestDto.noPermission();
+
+            boardEntity.patch(dto);
+            boardRepository.save(boardEntity);
+
+            List<String> boardImageList = dto.getBoardImageList();
+
+            boardImageRepository.deleteByBoardNumber(boardNumer);
+
+            List<BoardImageEntity> boardImageEntities = new ArrayList<>();
+            for(String boardImage : boardImageList) {
+                BoardImageEntity boardImageEntity = new BoardImageEntity(boardNumer, boardImage);
+                boardImageEntities.add(boardImageEntity);
+            }
+            boardImageRepository.saveAll(boardImageEntities);
     
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PatchBoardRequestDto.success();
+
+    }
+
 }

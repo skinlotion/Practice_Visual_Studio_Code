@@ -3,8 +3,9 @@ import { SignInRequestDto, SignUpRequestDto } from "./dto/request/auth";
 import { SignInResponseDto, SignUpResponseDto } from "./dto/response/auth";
 import ResponseDto from "./dto/response";
 import { GetSignInUserResponseDto, GetUserResponseDto } from "./dto/response/user";
-import { PostBoardRequestDto, PostCommentRequestDto } from "./dto/request/board";
-import { PostBoardResponseDto, GetLatestBoardListResponseDto, GetBoardResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, GetCommentListResponseDto, PostCommentResponseDto } from "./dto/response/board";
+import { PostBoardRequestDto } from "./dto/request/board";
+import { PostBoardResponseDto, GetLatestBoardListResponseDto, GetBoardResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, GetCommentListResponseDto } from "./dto/response/board";
+import PatchBoardRequestDto from "./dto/request/board/patch-board.request.dto";
 
 
 // description : 도메인 URL  //
@@ -65,6 +66,10 @@ const POST_COMMENT_URL = (boardNumer : string | number) => `${API_DOMAIN}/board/
 
 //                      description : put favorite API end point                       //
 const PUT_FAVORITE_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}/favorite`
+
+//                      description : patch board API end point                       //
+const  PATCH_BOARD_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}/boasdfasd`
+
 //                      description : get favorite list API end point                       //
 const GET_FAVORITE_LIST_URL = (boardNumber : string | number) => `${API_DOMAIN}/board/${boardNumber}/favorite-list`
 //                      description : get board request                     //
@@ -168,6 +173,23 @@ export const putFavoriteRequest = async (boardNumber : string | number, token : 
         });
     return result
 };
+//                      description : patch board request                       //
+export const patchBoardRequest = async (requestBody : PatchBoardRequestDtm, boardNumber : string | number, token : string) => {
+    const result = await axios.patch(PATCH_BOARD_URL(boardNumber), requestBody, authorization(token))
+       .then (response => {
+        const responseBody : PatchBoardRequestDto = response.data;
+        const{ code } = responseBody
+        return code;
+       })
+       .catch (error => {
+        const responseBody : ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+
+       })
+       return result
+
+}
 // description : get sign in user API end point //
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 
