@@ -4,7 +4,7 @@ import { SignInResponseDto, SignUpResponseDto } from "./dto/response/auth";
 import ResponseDto from "./dto/response";
 import { GetSignInUserResponseDto, GetUserResponseDto } from "./dto/response/user";
 import { PostBoardRequestDto } from "./dto/request/board";
-import { PostBoardResponseDto, GetLatestBoardListResponseDto, GetBoardResponseDto } from "./dto/response/board";
+import { PostBoardResponseDto, GetLatestBoardListResponseDto, GetBoardResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, GetCommentListResponseDto } from "./dto/response/board";
 
 
 // description : 도메인 URL  //
@@ -52,12 +52,18 @@ export const signInRequest = async(requestbody : SignInRequestDto) => {
 };
 //                      description : get board API end point                       //
 const GET_BOARD_URL = (boardNumber : string | number) => `${API_DOMAIN}/board/${boardNumber}`
+
+//                      description : get comment list API end point
+const GET_COMMENT_LIST_URL = (boardNumber: string | number) => `${API_DOMAIN}/board/${boardNumber}/comment-list`;
+
 //                      description : get latest board list API end point                       //
 const GET_LATEST_BOARD_LIST_URL = () => `${API_DOMAIN}/board/latest-list`;
-
 //                      description : post board API end point                        //
 const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
-
+//                      description : put favorite API end point                       //
+const PUT_FAVORITE_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}/favorite`
+//                      description : get favorite list API end point                       //
+const GET_FAVORITE_LIST_URL = (boardNumber : string | number) => `${API_DOMAIN}/board/${boardNumber}/favorite-list`
 //                      description : get board request                     //
 export const getBoardrequest = async (boardNumber : string | number) => {
     const result = await axios.get(GET_BOARD_URL(boardNumber))
@@ -71,6 +77,35 @@ export const getBoardrequest = async (boardNumber : string | number) => {
     })
         return result;
 }
+
+//                      description : get comment list request
+export const getCommentListRequest = async (boardNumber: string | number) => {
+    const result = await axios.get(GET_COMMENT_LIST_URL(boardNumber))
+        .then(response => {
+            const responseBody: GetCommentListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+    return result;
+};
+
+//                      description : get favorite list request                     //
+export const getFavoriteListRequest = async (boardNumber : string | number) => {
+    const result = await axios.get(GET_FAVORITE_LIST_URL(boardNumber))
+        .then(response => {
+            const responseBody : GetFavoriteListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch (error => {
+            const responseBody : ResponseDto = error.response.data
+            return responseBody;
+        })          
+        return result
+}
+
 //                      description : latest board request                      //
 export const getLatestBoardListRequest = async () => {
     const result = await axios.get(GET_LATEST_BOARD_LIST_URL())
@@ -99,8 +134,22 @@ export const postBoardRequest = async(requestbody : PostBoardRequestDto, token :
             return code;
         })
     return result;
-}
-
+};
+//                      description : put favorite request                       //
+export const putFavoriteRequest = async (boardNumber : string | number, token : string ) => {
+    const result = await axios.put(PUT_FAVORITE_URL(boardNumber), authorization(token))
+        .then (response => {
+            const responseBody : PutFavoriteResponseDto = response.data;
+            const {code} = responseBody;
+            return code;
+        })
+        .catch ( error => {
+            const responseBody : ResponseDto = error.response.data;
+            const {code} = responseBody;
+            return code;
+        });
+    return result
+};
 // description : get sign in user API end point //
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 
@@ -112,7 +161,8 @@ export const getSignInUserRequest = async (token : string) => {
     const result = await axios.get(GET_SIGN_IN_USER_URL(), authorization(token))
         .then(response => {
             const responseBody : GetSignInUserResponseDto = response.data;
-            return responseBody;
+            const {code} = responseBody;
+            return code;
         })
         .catch (error => {
             const responseBody : ResponseDto = error.response.data;
