@@ -2,10 +2,11 @@ import axios from "axios";
 import { SignInRequestDto, SignUpRequestDto } from "./dto/request/auth";
 import { SignInResponseDto, SignUpResponseDto } from "./dto/response/auth";
 import ResponseDto from "./dto/response";
-import { GetSignInUserResponseDto, GetUserResponseDto } from "./dto/response/user";
-import { PostBoardRequestDto } from "./dto/request/board";
-import { PostBoardResponseDto, GetLatestBoardListResponseDto, GetBoardResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, GetCommentListResponseDto } from "./dto/response/board";
+import { GetSignInUserResponseDto, GetUserResponseDto, PatchNicknameResponseDto } from "./dto/response/user";
+import { PostBoardRequestDto, PostCommentRequestDto } from "./dto/request/board";
+import { PostBoardResponseDto, GetLatestBoardListResponseDto, GetBoardResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, GetCommentListResponseDto, DeleteBoardResponseDto, GetUserBoardListResponseDto, IncreaseViewResponseDto, PostCommentResponseDto } from "./dto/response/board";
 import PatchBoardRequestDto from "./dto/request/board/patch-board.request.dto";
+import { PatchNicknameRequestDto } from "./dto/request/user";
 
 
 // description : 도메인 URL  //
@@ -59,16 +60,26 @@ const GET_COMMENT_LIST_URL = (boardNumber: string | number) => `${API_DOMAIN}/bo
 
 //                      description : get latest board list API end point                       //
 const GET_LATEST_BOARD_LIST_URL = () => `${API_DOMAIN}/board/latest-list`;
+
+//                      description : get user board list API end point                       //
+const GET_USER_BOARD_LIST_URL = (email : string) => `${API_DOMAIN}/board/user-board-list/${email}`;
+
 //                      description : post board API end point                        //
 const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
 //                      description : post comment API end point                        //
 const POST_COMMENT_URL = (boardNumer : string | number) => `${API_DOMAIN}/board/${boardNumer}/comment`;
 
 //                      description : put favorite API end point                       //
-const PUT_FAVORITE_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}/favorite`
+const PUT_FAVORITE_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
 
 //                      description : patch board API end point                       //
-const  PATCH_BOARD_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}/boasdfasd`
+const  PATCH_BOARD_URL = (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}`;
+
+//                      description : increase view count API end point                            //
+const INCREASE_VIEW_COUNT = (boardNumber : string | number )=>`${API_DOMAIN}/board/increase-view-count/${boardNumber}`;
+
+//                      description : delete board API end point                            //
+const DELETE_BOARD_URL =  (boardNumber : string | number ) => `${API_DOMAIN}/board/${boardNumber}`;
 
 //                      description : get favorite list API end point                       //
 const GET_FAVORITE_LIST_URL = (boardNumber : string | number) => `${API_DOMAIN}/board/${boardNumber}/favorite-list`
@@ -143,6 +154,20 @@ export const getLatestBoardListRequest = async () => {
         return result;
 }
 
+//                      description : get user board request                        //
+export const getUserBoardListRequest = async (email : string) => {
+    const result = await axios.get(GET_USER_BOARD_LIST_URL(email))
+    .then(response => {
+        const responseBody : GetUserBoardListResponseDto = response.data;
+        return responseBody;
+    })
+    .catch (error => {
+        const responseBody : ResponseDto = error.response.data;
+        return responseBody;
+    })
+    return result;
+}
+
 //                      description : post board request                        //
 export const postBoardRequest = async(requestbody : PostBoardRequestDto, token : string) => {
     const result = await axios.post(POST_BOARD_URL(), requestbody, authorization(token))
@@ -174,11 +199,11 @@ export const putFavoriteRequest = async (boardNumber : string | number, token : 
     return result
 };
 //                      description : patch board request                       //
-export const patchBoardRequest = async (requestBody : PatchBoardRequestDtm, boardNumber : string | number, token : string) => {
+export const patchBoardRequest = async (requestBody : PatchBoardRequestDto, boardNumber : string | number, token : string) => {
     const result = await axios.patch(PATCH_BOARD_URL(boardNumber), requestBody, authorization(token))
        .then (response => {
         const responseBody : PatchBoardRequestDto = response.data;
-        const{ code } = responseBody
+        const{ code } = responseBody;
         return code;
        })
        .catch (error => {
@@ -190,11 +215,46 @@ export const patchBoardRequest = async (requestBody : PatchBoardRequestDtm, boar
        return result
 
 }
+//                      description : increase view count request                      //
+export const increaseViewCountRequest = async(boardNumber : string | number) => {
+    const result = await axios.patch(INCREASE_VIEW_COUNT(boardNumber))
+    .then (response => {
+        const responseBody : IncreaseViewResponseDto = response.data;
+        const{ code } = responseBody;
+        return code;
+       })
+       .catch (error => {
+        const responseBody : ResponseDto = error.response.data;
+        const { code } = responseBody;
+        return code;
+
+       })
+       return result
+}
+
+//                      description : delete board request                      //
+export const deleteBoardNumberRequest = async (boardNumber : string | number, token : string ) => {
+    const result = await axios.delete(DELETE_BOARD_URL(boardNumber), authorization(token))
+        .then (response => {
+            const responseBody : DeleteBoardResponseDto = response.data;
+            const{ code } = responseBody
+            return code;
+       })
+       .catch (error => {
+            const responseBody : ResponseDto = error.response.data;
+            const { code } = responseBody;
+            return code;
+       })
+       return result 
+}
+
 // description : get sign in user API end point //
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 
 //                      description : get user API end point                        //
 const GET_USER_URL = (email : String) => `${API_DOMAIN}/user/${email}`;
+//                      description : patch nickname API end point                        //
+const PATCH_NICKNAME_URL =() => `${API_DOMAIN}/user/nickname`;
 
 // description : get sign in request    //
 export const getSignInUserRequest = async (token : string) => {
@@ -210,7 +270,21 @@ export const getSignInUserRequest = async (token : string) => {
         });
         return result;
 };
-
+//                      description : patch nickname request                        //
+export const patchNicknameRequest = async (requestBody : PatchNicknameRequestDto, token : string ) => {
+    const result = await axios.patch(PATCH_NICKNAME_URL(), requestBody, authorization(token))
+    .then(response => {
+        const responseBody : PatchNicknameResponseDto = response.data;
+        const {code} = responseBody;
+        return code;
+    })
+    .catch (error => {
+        const responseBody : ResponseDto = error.response.data;
+        const {code} = responseBody;
+        return code;
+    });
+    return result;
+}
 //                      description : get user request                      //
 export const getUserRequest = async (email : string) => {
     const result = await axios.get(GET_USER_URL(email))

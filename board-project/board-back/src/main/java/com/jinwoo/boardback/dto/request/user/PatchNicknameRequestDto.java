@@ -1,4 +1,4 @@
-package com.jinwoo.boardback.dto.request.board;
+package com.jinwoo.boardback.dto.request.user;
 
 import javax.validation.constraints.NotBlank;
 
@@ -9,8 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostCommentRequestDto {
+public class PatchNicknameRequestDto {
+    
     @NotBlank
-    private String content;
+    private String nickname;
     
 }

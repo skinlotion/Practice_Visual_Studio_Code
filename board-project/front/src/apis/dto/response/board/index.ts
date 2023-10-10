@@ -7,6 +7,9 @@ import PatchBoardResponseDto from "./patch-board.response.dto";
 import PostCommentResponseDto from "./post-comment.response.dto";
 import PostBoardResponseDto from "./post-board.response.dto";
 import PutFavoriteResponseDto from "./get-favorite.response.dto";
+import DeleteBoardResponseDto from "./delete-board.response.dto";
+import GetUserBoardListResponseDto from "./get-user-board-list.response.dto";
+import IncreaseViewResponseDto from "./increase-view-coubt.response.dto";
 
 export type {
     GetBoardResponseDto,
@@ -17,4 +20,7 @@ export type {
     PostCommentResponseDto,
     PutFavoriteResponseDto,
     PatchBoardResponseDto,
+    DeleteBoardResponseDto,
+    GetUserBoardListResponseDto,
+    IncreaseViewResponseDto,
 }

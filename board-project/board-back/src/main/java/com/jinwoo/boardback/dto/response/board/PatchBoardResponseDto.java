@@ -7,6 +7,9 @@ import com.jinwoo.boardback.dto.response.ResponseCode;
 import com.jinwoo.boardback.dto.response.ResponseDto;
 import com.jinwoo.boardback.dto.response.ResponseMessage;
 
+import lombok.Getter;
+
+@Getter
 public class PatchBoardResponseDto extends ResponseDto{
     private PatchBoardResponseDto(String code, String message) {
         super(code, message);

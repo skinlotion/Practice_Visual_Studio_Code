@@ -3,9 +3,11 @@ package com.jinwoo.boardback.service.implement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.jinwoo.boardback.dto.request.user.PatchNicknameRequestDto;
 import com.jinwoo.boardback.dto.response.ResponseDto;
 import com.jinwoo.boardback.dto.response.user.GetSignInUserResponseDto;
 import com.jinwoo.boardback.dto.response.user.GetUserResponseDto;
+import com.jinwoo.boardback.dto.response.user.PatchNicknameResponseDto;
 import com.jinwoo.boardback.entity.UserEntity;
 import com.jinwoo.boardback.repository.UserRepository;
 import com.jinwoo.boardback.service.UserService;
@@ -30,7 +32,7 @@ public class UserServiceImplemnet implements UserService{
             
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
         return GetSignInUserResponseDto.success(userEntity);
     }
@@ -46,8 +48,28 @@ public class UserServiceImplemnet implements UserService{
             
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
         return GetUserResponseDto.success(userEntity); 
+    }
+
+    @Override
+    public ResponseEntity<? super PatchNicknameResponseDto> patchNickname(PatchNicknameRequestDto dto, String email) {
+        try {
+            String nickname = dto.getNickname();
+            boolean existedNickname = userRepository.existsByNickname(nickname);
+            if(existedNickname) return PatchNicknameResponseDto.duplicateNickname();
+
+            UserEntity userEntity = userRepository.findByEmail(email);
+            if(userEntity == null) return PatchNicknameResponseDto.notExistUser();
+
+            userEntity.patchNickname(dto);
+            userRepository.save(userEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return PatchNicknameResponseDto.success();
     }
 }

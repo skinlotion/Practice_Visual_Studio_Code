@@ -53,7 +53,7 @@ public class AuthServiceImplement implements AuthService{
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
 
         return SignUpResponseDto.succes();
@@ -79,7 +79,7 @@ public class AuthServiceImplement implements AuthService{
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            return ResponseDto.dataBaseError();
+            return ResponseDto.databaseError();
         }
         return SignInResponseDto.success(token);
     }
