@@ -1,6 +1,10 @@
 package com.jinwoo.boardback.service.implement;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,8 @@ import com.jinwoo.boardback.dto.response.board.GetBoardResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetCommentListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetLatestBoardListResponseDto;
+import com.jinwoo.boardback.dto.response.board.GetSearchBoardListResponseDto;
+import com.jinwoo.boardback.dto.response.board.GetTop3BoardListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.jinwoo.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.jinwoo.boardback.dto.response.board.PatchBoardResponseDto;
@@ -25,12 +31,14 @@ import com.jinwoo.boardback.entity.BoardImageEntity;
 import com.jinwoo.boardback.entity.BoardViewEntity;
 import com.jinwoo.boardback.entity.CommentEntity;
 import com.jinwoo.boardback.entity.FavoriteEntity;
+import com.jinwoo.boardback.entity.SearchLogEntity;
 import com.jinwoo.boardback.entity.UserEntity;
 import com.jinwoo.boardback.repository.BoardImageRepository;
 import com.jinwoo.boardback.repository.BoardRepository;
 import com.jinwoo.boardback.repository.BoardViewRepository;
 import com.jinwoo.boardback.repository.CommentRepository;
 import com.jinwoo.boardback.repository.FavoriteRepository;
+import com.jinwoo.boardback.repository.SearchlogRepository;
 import com.jinwoo.boardback.repository.UserRepository;
 import com.jinwoo.boardback.repository.resultSet.CommentListResultSet;
 import com.jinwoo.boardback.service.BoardService;
@@ -48,6 +56,7 @@ public class BoardServiceImplement implements BoardService {
     private final FavoriteRepository favoriteRepository; 
     private final BoardViewRepository boardViewRepository;
     private final BoardImageRepository boardImageRepository;
+    private final SearchlogRepository searchlogRepository;
 
     @Override
     public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -309,6 +318,48 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetUserBoardListResponseDto.success(boardViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList() {
+        List<BoardViewEntity> boardViewEntities = new ArrayList<>();
+        try {
+            Date now = Date.from(Instant.now().minus(7, ChronoUnit.DAYS));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+            String sevenDaysAgo = simpleDateFormat.format(now);
+
+            boardViewEntities = boardViewRepository.findTop3ByWriteDatetimeGreaterThanOrderByFavoriteCountDesc(sevenDaysAgo);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetTop3BoardListResponseDto.success(boardViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchword, String preSearchWord) {
+        List<BoardViewEntity> boardViewEntities = new ArrayList<>();
+        
+        try {
+            boardViewEntities = boardViewRepository.findByTitleContainsOrContentContainsOrderByWriteDatetimeDesc(searchword, preSearchWord);
+
+            boolean relation = preSearchWord != null;
+
+            SearchLogEntity searchLogEntity = new SearchLogEntity(searchword, preSearchWord, relation);
+            searchlogRepository.save(searchLogEntity);
+
+            if(relation) {
+                searchLogEntity = new SearchLogEntity(preSearchWord, searchword, relation);
+                searchlogRepository.save(searchLogEntity);
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetSearchBoardListResponseDto.success(boardViewEntities);
     }
 
 

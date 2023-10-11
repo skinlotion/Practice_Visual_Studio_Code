@@ -22,6 +22,8 @@ import com.jinwoo.boardback.dto.response.board.GetBoardResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetCommentListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetLatestBoardListResponseDto;
+import com.jinwoo.boardback.dto.response.board.GetSearchBoardListResponseDto;
+import com.jinwoo.boardback.dto.response.board.GetTop3BoardListResponseDto;
 import com.jinwoo.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.jinwoo.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.jinwoo.boardback.dto.response.board.PatchBoardResponseDto;
@@ -74,6 +76,20 @@ public class BoardController {
         ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
         return response;
     };
+
+    @GetMapping("/top-3")
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList(){
+       ResponseEntity<? super GetTop3BoardListResponseDto> response = boardService.getTop3BoardList();
+       return response;
+    }
+    @GetMapping(value = {"/search-list/{searchWord}", "/search-list/{searchWord}/{preSearchWord}"})
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(
+        @PathVariable ("searchWord") String searchWord,
+        @PathVariable(value = "preSearchWord", required = false) String preSearchWord
+    ){
+        ResponseEntity<?super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord, preSearchWord);
+        return response;
+    }
 
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
@@ -128,5 +144,4 @@ public class BoardController {
         ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
         return response;
     }
-
 }
