@@ -142,6 +142,6 @@ public class BoardController {
         @AuthenticationPrincipal String email
     ){
         ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber, email);
-        return response;
+        return response; 
     }
 }
