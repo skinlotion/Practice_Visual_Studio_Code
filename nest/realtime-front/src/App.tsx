@@ -1,9 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import './App.css';
 import { socket } from './utils/socket';
 import { disconnect } from 'process';
 
 function App() {
+
+  const [connected, setConnected] = useState<boolean>(false);
+  const [room, setRoom] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+
+  const onRoomChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setRoom(value);
+  }
+
+  const onJoinButtonHandler = () => {
+    socket.emit('join', room);
+    setConnected(true);
+  }
+
   let effectFlag = true;
   useEffect(()=> {
     
@@ -26,7 +42,17 @@ function App() {
   },[]);
 
   return (
-    <div></div>
+    <div>
+      {!connected ? (
+        <div>
+          <input value={room} onChange={onRoomChangeHandler}/>
+          <button onClick={onJoinButtonHandler}>조인</button>
+        </div>
+      ) : (
+        <div></div>
+      )}
+      
+    </div>
   );
 }
 
