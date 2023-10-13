@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import { socket } from './utils/socket';
+import { disconnect } from 'process';
 
 function App() {
+  let effectFlag = true;
+  useEffect(()=> {
+    
+    if(effectFlag) {
+      effectFlag = false;
+      return;
+    }
+
+    const onConnect = () => {
+      console.log(socket.id + ' Socket Connected!');
+    }
+
+    const onDisconnect = () => {
+      console.log('Socket disconnected!');
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+
+  },[]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div></div>
   );
 }
 
