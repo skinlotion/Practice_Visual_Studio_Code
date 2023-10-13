@@ -9,6 +9,7 @@ import PatchBoardRequestDto from "./dto/request/board/patch-board.request.dto";
 import { PatchNicknameRequestDto, PatchProfileImageRequestDto } from "./dto/request/user";
 import IncreaseViewCountResponseDto from "./dto/response/board/increase-view-count.response.dto";
 import { error } from "console";
+import { GetPopularListResponseDto, GetRelationListResponseDto } from "./dto/response/search";
 
 // description: Domain URL //
 const DOMAIN = 'http://localhost:4000';
@@ -273,6 +274,37 @@ export const deleteBoardRequest = async (boardNumber: string | number, token: st
     return result;
 }
 
+// description: get popular list API end point //
+const GET_POPULAR_LIST_URL = () => `${API_DOMAIN}/search/popular-list`;
+// description: get relation list API end point //
+const GET_RELATION_LIST_URL = (searchWord : string) => `${API_DOMAIN}/search/${searchWord}/relation-list`;
+// description: get popular list request //
+export const getPopularListRequest = async() => {
+    const result = await axios.get(GET_POPULAR_LIST_URL())
+        .then(response => {
+            const responseBody : GetPopularListResponseDto = response.data;
+            return responseBody
+        })
+        .catch(error => {
+            const responseBody : ResponseDto = error.response.data;
+            return responseBody;
+        });
+    return result;
+};
+// description: get relation list request //
+export const getRelationListRequest = async(searchWord : string) => {
+    const result = await axios.get(GET_RELATION_LIST_URL(searchWord))
+        .then(response => {
+            const responseBody : GetRelationListResponseDto = response.data;
+            return responseBody
+        })
+        .catch(error => {
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+    return result;
+}
+
 // description: get sign in user API end point //
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 // description: get user API end point //
@@ -294,7 +326,6 @@ export const getSignInUserRequest = async (token: string) => {
         });
     return result;
 };
-
 // description: get user request //
 export const getUserRequest = async (email: string) => {
     const result = await axios.get(GET_USER_URL(email))
@@ -309,7 +340,6 @@ export const getUserRequest = async (email: string) => {
 
     return result;
 };
-
 // description: patch nickname request //
 export const patchNicknameRequest = async (requestBody: PatchNicknameRequestDto, token: string) => {
     const result = await axios.patch(PATCH_NICKNAME_URL(), requestBody, authorization(token))
@@ -324,7 +354,7 @@ export const patchNicknameRequest = async (requestBody: PatchNicknameRequestDto,
             return code;
         });
     return result;
-}
+};
 // description: patch profile image request //
 export const patchProfileImageRequest = async ( requestBody : PatchProfileImageRequestDto, token : string) => {
     const result = await axios.patch(PATCH_PROFILE_IMAGE_URL(), requestBody, authorization(token))
@@ -339,17 +369,14 @@ export const patchProfileImageRequest = async ( requestBody : PatchProfileImageR
             return code;
         })
     return result;
-}
+};
 
 // description: File Domain 주소 //
 const FILE_DOMAIN = `${DOMAIN}/file`;
-
 // description: file upload end point //
 const FILE_UPLOAD_URL = () => `${FILE_DOMAIN}/upload`;
-
 // description: File Content type Header //
 const multipart = { headers: { 'Content-Type': 'multipart/form-data' } };
-
 // description: file upload request //
 export const fileUploadRequest = async (data: FormData) => {
     const result = await axios.post(FILE_UPLOAD_URL(), data, multipart)

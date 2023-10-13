@@ -10,8 +10,9 @@ import Pageination from 'components/Pagination';
 import { usePagination } from 'hooks';
 import GetLatestBoardListResponseDto from 'apis/dto/response/board/get-latest-board-list.response.dto';
 import ResponseDto from 'apis/dto/response';
-import { getLatestBoardListRequest, getTop3BoardListRequest } from 'apis';
+import { getLatestBoardListRequest, getPopularListRequest, getTop3BoardListRequest } from 'apis';
 import { GetTop3BoardListResponseDto } from 'apis/dto/response/board';
+import { GetPopularListResponseDto } from 'apis/dto/response/search';
 
 //            component : 메인페이지            //
 export default function Main() {
@@ -58,9 +59,17 @@ export default function Main() {
 
     //            function : 네비게이트 함수            //
     const navigator = useNavigate();
+    //            function : get popular list response 처리함수           //
+    const getPopularListResponse = (responseBody : GetPopularListResponseDto | ResponseDto) => {
+      const {code} = responseBody;
+      if(code === 'DBE') alert('데이터베이스 오류입니다.')
+      if(code !== 'SU') return;
 
+      const { popularWordList } = responseBody as GetPopularListResponseDto;
+      setPopularWordList(popularWordList);
+    }
     //            function : get latest board list response 처리 함수            //
-    const GetLatestBoardListResponse = (responseBody : GetLatestBoardListResponseDto | ResponseDto ) => {
+    const getLatestBoardListResponse = (responseBody : GetLatestBoardListResponseDto | ResponseDto ) => {
       const {code} = responseBody;
       if(code === 'DBE') alert('데이터베이스 오류입니다.')
       if(code !== 'SU') return;
@@ -77,9 +86,8 @@ export default function Main() {
 
     //            effect : 컴포넌트 마운트시 인기검색어 리스트 불러오기            //
     useEffect (() => {
-      //TODO : API호출로 변경
-      setPopularWordList(popularWordListMock);
-      getLatestBoardListRequest().then(GetLatestBoardListResponse);
+      getPopularListRequest().then(getPopularListResponse);
+      getLatestBoardListRequest().then(getLatestBoardListResponse);
 
     },[]);
     
