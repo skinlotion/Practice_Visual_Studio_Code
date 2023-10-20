@@ -12,18 +12,19 @@ function App() {
   const [message, setMessage] = useState<string>('');
   const [receiveMessages, setReceiveMessages] = useState<ReceiveMessage[]>([]);
 
-  const onNicknameChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
+  const onNicknameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setNickname(value);
   }
-  const onMessageHandler = (event : ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setMessage(value);
-  }
 
-  const onRoomChangeHandler = (event : ChangeEvent<HTMLInputElement>) => {
+  const onRoomChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setRoom(value);
+  }
+
+  const onMessageChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setMessage(value);
   }
 
   const onJoinButtonHandler = () => {
@@ -31,60 +32,60 @@ function App() {
     setConnected(true);
   }
 
-  const onSubmitButtonHandler =() => {
-    const data : Message = {room, nickname, message};
+  const onSubmitButtonHandler = () => {
+    const data: Message = { room, nickname, message };
     socket.emit('send', data);
     setMessage('');
   }
 
-  const onReceiveHandler = (recevieMessage : ReceiveMessage) => {
-    const newRecevieMessages = receiveMessages.map(item => item);
-    newRecevieMessages.push(recevieMessage);
-    setReceiveMessages(newRecevieMessages);
+  const onReceiveHandler = (receiveMessage: ReceiveMessage) => {
+    const newReceiveMessages = receiveMessages.map(item => item);
+    newReceiveMessages.push(receiveMessage);
+    setReceiveMessages(newReceiveMessages);
   }
 
   socket.on('receive', onReceiveHandler);
 
   let effectFlag = true;
-  useEffect(()=> {
-    
-    if(effectFlag) {
+  useEffect(() => {
+
+    if (effectFlag) {
       effectFlag = false;
       return;
     }
 
     const onConnect = () => {
-      console.log(socket.id + ' Socket Connected!');
+      console.log(socket.id + ' Socket Connected!!');
     }
 
     const onDisconnect = () => {
-      console.log('Socket disconnected!');
+      console.log('Socket Disconnected!!');
     }
 
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
 
-  },[]);
+  }, []);
 
   return (
     <div>
       {!connected ? (
-        <div>
-          닉네임 :
-          <input value={nickname} onChange={onNicknameChangeHandler}/>
-          방이름 :
-          <input value={room} onChange={onRoomChangeHandler}/>
-          <button onClick={onJoinButtonHandler}>조인</button>
-        </div>
+      <div>
+        닉네임:
+        <input value={nickname} onChange={onNicknameChangeHandler} />
+        방이름:
+        <input value={room} onChange={onRoomChangeHandler} />
+        <button onClick={onJoinButtonHandler}>조인</button>
+      </div>
       ) : (
-        <div>
-          <h3>{`방이름 : ${room} / 닉네임 : ${nickname}`}</h3>
-          <input value={message} onChange={onMessageHandler}/>
-          <button onClick={onSubmitButtonHandler}>전송</button>
-          <div style={{display : 'flex', flexDirection : 'column-reverse'}}>
-            {receiveMessages.map(receiveMessage => <h4>{receiveMessage.nickname} : {receiveMessage.message}</h4>)}
-          </div>
+      <div>
+        <h3>{`방 이름: ${room} / 닉네임: ${nickname}`}</h3>
+        <input value={message} onChange={onMessageChangeHandler} />
+        <button onClick={onSubmitButtonHandler}>전송</button>
+        <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+          {receiveMessages.map(receiveMessage => <h4>{receiveMessage.nickname} : {receiveMessage.message}</h4>)}
         </div>
+      </div>
       )}
     </div>
   );
